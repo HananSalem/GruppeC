@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>portNonSSL</param-name>
+        <param-value>8080</param-value>
+    </context-param>
+    <context-param>
+        <param-name>portSSL</param-name>
+        <param-value>8081</param-value>
+    </context-param>
+    <context-param>
+        <param-name>useSSL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>autoLogon</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>autoLogonUser</param-name>
+        <param-value>emp</param-value>
+    </context-param>
+    <context-param>
+        <param-name>autoLogonPassword</param-name>
+        <param-value>test</param-value>
+    </context-param>
     <session-config>
         <session-timeout>
             30
@@ -13,4 +37,13 @@
         <description/>
         <role-name>All</role-name>
     </security-role>
+    <security-role>
+        <description/>
+        <role-name>AccountManager</role-name>
+    </security-role>
+    <ejb-ref>
+        <ejb-ref-name>BankManagerBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>dk.cphbusiness.bank.contract.BankManager</remote>
+    </ejb-ref>
 </web-app>

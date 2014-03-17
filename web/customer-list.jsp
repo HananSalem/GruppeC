@@ -12,7 +12,7 @@
         <h1>Customer list</h1>
         <hr/>
         <c:forEach var="customer" items="${customers}">
-            Kunde: <a href="Controller?command=customer-accounts&cpr=${customer.cpr}"> ${customer.cpr}</a>
+            Kunde: <a href="Controller?command=customerDetail&cpr=${customer.cpr}"> ${customer.cpr}</a>
             <br/>
         </c:forEach>
 

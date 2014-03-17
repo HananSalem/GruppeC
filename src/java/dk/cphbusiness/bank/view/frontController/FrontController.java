@@ -5,12 +5,14 @@
  */
 package dk.cphbusiness.bank.view.frontController;
 
+import dk.cphbusiness.bank.contract.BankManager;
 import dk.cphbusiness.bank.view.Factory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,26 +27,25 @@ import security.SecurityRole;
  */
 @WebServlet(name = "FrontController", urlPatterns = {"/Controller"})
 public class FrontController extends HttpServlet {
-//
-//    private final Map<String, Command> commands = new HashMap<>();
-
+   // Step 2
+    @EJB
+    private BankManager manager;
+    
+    // STEP 1
     public FrontController() {
-//        Map<SecurityRole, String> roles = new HashMap<>();
-//        roles.put(SecurityRole.Customer, "account-list.jsp");
-//
-//        // commands.put("list-accounts", new ListAccountsCommand("account-list.jsp", Arrays.asList(SecurityRole.Customer)));
-//        commands.put("back", new TargetCommand("main.jsp", Arrays.asList(SecurityRole.All)));
-//        commands.put("main", new TargetCommand("main.jsp", Arrays.asList(SecurityRole.All)));
-//        commands.put("list-customers", new ListCustomersCommand("customer-list.jsp", Arrays.asList(SecurityRole.Customer)));
-//        commands.put("customer-accounts", new ListCustomerAccountsCommand("account-list.jsp", Arrays.asList(SecurityRole.Customer)));
-//        commands.put("account-detail", new AccountDetailCommand("account-detail.jsp", Arrays.asList(SecurityRole.Customer)));
-//        commands.put("prepare-transfer", new GoToTransferCommand("transfer-edit.jsp", Arrays.asList(SecurityRole.Customer)));
-//        commands.put("transfer-amount", new PrepareTransferCommand("account-detail.jsp", Arrays.asList(SecurityRole.Customer)));
-//        commands.put("login", new LoginCommand(roles, "login.jsp")); //den skiller sig ud, kig pp loginCommands konstruktør/arver ikke fra targetCommand, men fra command
-//        commands.put("logout", new LogoutCommand("main.jsp", Arrays.asList(SecurityRole.All)));
-//        commands.put("showlogin", new ShowLoginCommand("login.jsp", Arrays.asList(SecurityRole.All)));
+        
     }
 
+    //STEP 3
+    @Override
+    public void init() throws ServletException {
+        
+        super.init();
+        Factory.getInstance().setManager(manager);
+    }
+
+    
+    // STEP 4, 5,...
     @Override
     protected void service(
             HttpServletRequest request,
@@ -54,7 +55,7 @@ public class FrontController extends HttpServlet {
         if (key == null) {
             key = "main";
         }
-        Command command = commands.get(key); 
+        Command command =Factory.getInstance().getCommand(key,request);
         String target = command.execute(request); // får fat på vores target, navnet på jsp siden som vi vil over til
         RequestDispatcher dispatcher = request.getRequestDispatcher(target); // de sidste to linjer : det er her man rent faktisk bliver sendt videre til det target man vil hen til
         dispatcher.forward(request, response);

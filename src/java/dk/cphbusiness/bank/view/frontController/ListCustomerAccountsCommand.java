@@ -30,14 +30,14 @@ public class ListCustomerAccountsCommand extends TargetCommand {
     @Override
     public String execute(HttpServletRequest request) {
         
-        String cpr = request.getParameter("cpr");
-        System.out.println("cpr = "+cpr);
+        String cpr = (String) request.getSession().getAttribute("cpr");
+     
         BankManager manager = Factory.getInstance().getManager();
         CustomerIdentifier customer = CustomerIdentifier.fromString(cpr);
         Collection<AccountSummary> customerAccounts = manager.listCustomerAccounts(customer);
 
         request.setAttribute("customerAccounts", customerAccounts);
-        request.setAttribute("cpr", cpr);
+      
    
         return super.execute(request);
     }

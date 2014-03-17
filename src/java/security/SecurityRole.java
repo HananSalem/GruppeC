@@ -11,6 +11,6 @@ package security;
  * @author Hanan
  */
 public enum SecurityRole {
-    Customer, All;
+    Customer, All, AccountManager;
     
 }

@@ -27,9 +27,10 @@ public class AccountDetailCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-      
-        String number = request.getParameter("number");
+        
         BankManager manager = Factory.getInstance().getManager();
+        
+        String number = request.getParameter("number");
         AccountIdentifier accountIdentifier = AccountIdentifier.fromString(number);
 
         AccountDetail accountDetail = manager.showAccountHistory(accountIdentifier);
